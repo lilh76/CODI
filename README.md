@@ -42,7 +42,7 @@ One example here for start training by run the following command:
 python run_experiment.py -e exp_specs/<env_name>/<task>/<dataset>.yaml
 ```
 
-You can modify the content in the yaml file to modify the specific experiment settings.
+You can modify the content in the yaml file to modify the specific experiment settings. 
 
 ### Stitching Stage
 

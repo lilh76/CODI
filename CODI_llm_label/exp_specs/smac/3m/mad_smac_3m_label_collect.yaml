@@ -1,0 +1,130 @@
+meta_data:
+  exp_name: "mad_smac"
+  script_path: "run_scripts/train.py"
+  num_workers: 1  # num of process to open
+  job_name: "{dataset}/test"
+
+variables:
+  seed: [9061530]
+
+  horizon: [8]
+
+  returns_scale: [1]
+  dataset: ["3m-expert-imb2-20k"]
+  condition_guidance_w: [1.2]
+
+constants:
+
+  include_labels: True
+
+  # misc
+  seed: 101
+  env_type: "smac"
+  n_agents: 3
+  use_action: True
+  discrete_action: True
+  num_actions: 9
+  residual_attn: True
+  decentralized_execution: False
+  use_zero_padding: False
+  pred_future_padding: True
+  use_ddim_sample: True
+  n_ddim_steps: 15
+
+  # model
+  model: "models.SharedConvAttentionDeconv"
+  diffusion: "models.LabelModelWrapper"
+  share_inv: False
+  joint_inv: True
+  share_fwd: False
+  joint_fwd: True
+  history_horizon: 0
+  n_diffusion_steps: 200
+  action_weight: 10
+  loss_weights: null
+  loss_discount: 1
+  dim_mults: [1, 4, 8]
+  returns_condition: True
+  predict_epsilon: True
+  calc_energy: False
+  dim: 128
+
+  condition_dropout: 0.25
+  condition_guidance_w: 1.2
+  train_only_inv: True
+  clip_denoised: True
+  test_ret: -30 # useless
+  renderer: "utils.MPERenderer"
+
+  # main dataset
+  loader: "datasets.SequenceAugDataset"
+  normalizer: "CDFNormalizer"
+  max_n_episodes: 300000
+  preprocess_fns: []
+  use_padding: True
+  discount: 0.99
+  max_path_length: 60
+  termination_penalty: 0.0
+  circular_shift: True
+  shift_ratio: 0.1
+
+  # training
+  n_steps_per_epoch: 10000
+  n_train_steps: 500000
+  batch_size: 32
+  learning_rate: 0.0002
+  gradient_accumulate_every: 2
+  ema_decay: 0.995
+  log_freq: 1000
+  save_freq: 50000
+  sample_freq: 10000
+  n_saves: 5
+  save_parallel: False
+  n_reference: 3
+  save_checkpoints: True
+
+  # eval
+  evaluator: "utils.MADEvaluator"
+  num_envs: 10
+  num_eval: 50
+  eval_freq: 100000
+  
+  use_legal_model: False
+
+  # load checkpoint
+  continue_training: False
+
+#### llm_label relevant args ####
+  train_label_model: False
+
+  # synthesized (imbalanced-quality) data should be placed under syn_dataset_dir 
+  # collected label batches will be stored under diffuser/datasets/data/{task_dir}/batches
+  task_dir: "smac/3m"
+  syn_dataset_dir: "diffuser/datasets/data/smac/3m/expert-imb2-20k"
+
+  # train_label_model is False: 
+  #   collect label batches with indices [start_from_batch, end_before_batch)
+  # train_label_model is True: 
+  #   load label batches with indices [start_from_batch, end_before_batch)
+  start_from_batch: 0
+  end_before_batch: 1200
+
+  # train_label_model is False:
+  #   collect both true labels and LLM generated labels if use_llm_labels
+  #   otherwise collect true labels only
+  # train_label_model is True:
+  #   use LLM generated labels to train the label model if use_llm_labels
+  #   otherwise use true labels
+  use_llm_labels: True
+  prompt_handler: "smac"
+  
+
+  # label model structure
+  hidden_dim: 256
+  # label model loss validation
+  label_model_eval_freq: 2000
+  train_split: 0.9
+
+
+
+  

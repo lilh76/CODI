@@ -1,0 +1,34 @@
+meta_data:
+  exp_name: "syn"
+  script_path: "run_scripts/synthesize.py"
+  num_workers: 1
+
+variables:
+  log_dir: [
+    "",
+  ]
+
+constants:
+  load_steps: [500000]  # [1000000]
+  synthesizer: "utils.MADSynthesizer"
+  overwrite: True
+  use_ddim_sample: True  # True
+  n_ddim_steps: 15
+
+  n_gen: 20000 # 20000
+  gen_batch_size: 2048 # 2048
+  check_discrepancy: True # True
+  partially_noise: False
+  times_of_regen_upper_limit: 3
+  total_times_of_regen_upper_limit: 10
+  recon_threshold: 0.03 # cn: 0.01, 3m: 0.075
+  each_ig_step_num: 10
+  test_ret: 3
+  condition_guidance_w: 1.2
+  max_path_length_stitch: 30
+  
+  include_labels: False
+  use_composition_tech: False # when True, include_labels must also be True
+  
+  use_legal_model: True
+  use_label_model: False

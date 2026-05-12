@@ -1,0 +1,28 @@
+# --- VDN+CQL specific parameters ---
+
+# use epsilon greedy action selector
+action_selector: "epsilon_greedy"
+epsilon_start: 1.0
+epsilon_finish: 0.05
+epsilon_anneal_time: 50000
+
+runner: "episode"
+
+buffer_size: 5000
+
+# update the target network every {} episodes
+target_update_interval_or_tau: 0.01
+
+# use the Q_Learner to train
+agent_output_type: "q"
+learner: "q_learner"
+double_q: True
+mixer: "vdn"
+
+
+cal_target: "td_lambda"
+td_lambda: 0.6 # 0.3 for 6h_vs_8z else 0.6
+cql_alpha: 1. # largely depend on the quality of dataset
+cql_type: "global"
+
+name: "vdn_cql"

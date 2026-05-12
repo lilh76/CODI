@@ -1,0 +1,26 @@
+env: "gymma"
+
+env_args:
+  key: null
+  time_limit: 100
+  pretrained_wrapper: null
+  # pretrained_wrapper: PretrainedTag
+
+test_greedy: True
+test_nepisode: 32
+test_interval: 500
+log_interval: 500
+runner_log_interval: 500
+learner_log_interval: 500
+save_model_interval: 10000
+t_max: 20000
+
+# offline dataset, used only for single-task offline
+offline_data_folder: "dataset"
+offline_bottom_data_path: ""
+offline_data_quality: "expert"
+# offline_max_buffer_size: 4000
+offline_max_buffer_size: 40000
+offline_data_shuffle: False
+offline_data_type: "h5"
+max_return: -50
